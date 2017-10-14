@@ -8,10 +8,10 @@ from cogs.utils import checks
 
 
 class SuggestionBox:
-    """custom cog for a configureable suggestion box"""
+    """custom cog for a configureable tournament registration box"""
 
-    __author__ = "mikeshardmind"
-    __version__ = "1.4.1"
+    __author__ = "Credits for code: mikeshardmind. Tournament code edition: Garcia1008"
+    __version__ = "1.0"
 
     def __init__(self, bot):
         self.bot = bot
@@ -22,7 +22,7 @@ class SuggestionBox:
     def save_json(self):
         dataIO.save_json("data/suggestionbox/settings.json", self.settings)
 
-    @commands.group(name="setsuggest", pass_context=True, no_pm=True)
+    @commands.group(name="settournament", pass_context=True, no_pm=True)
     async def setsuggest(self, ctx):
         """configuration settings"""
         if ctx.invoked_subcommand is None:
@@ -43,7 +43,7 @@ class SuggestionBox:
     @checks.admin_or_permissions(Manage_server=True)
     @setsuggest.command(name="fixcache", pass_context=True, no_pm=True)
     async def fix_cache(self, ctx):
-        """use this if the bot gets stuck not recording your response"""
+        """Use this if the bot gets stuck not recording your response"""
         self.initial_config(ctx.message.server.id)
         self.settings[server.id]['usercache'] = []
         self.save_json()
@@ -74,7 +74,7 @@ class SuggestionBox:
     @checks.admin_or_permissions(Manage_server=True)
     @setsuggest.command(name="toggleactive", pass_context=True, no_pm=True)
     async def suggest_toggle(self, ctx):
-        """Toggles whether the suggestion box is enabled or not"""
+        """Toggles whether the tournament box is enabled or not"""
         server = ctx.message.server
         if server.id not in self.settings:
             self.initial_config(server.id)
@@ -87,9 +87,9 @@ class SuggestionBox:
             await self.bot.say("Suggestions enabled.")
 
     @commands.cooldown(1, 300, commands.BucketType.user)
-    @commands.command(name="suggest", pass_context=True)
+    @commands.command(name="register", pass_context=True)
     async def makesuggestion(self, ctx):
-        "make a suggestion by following the prompts"
+        " by following the prompts"
         author = ctx.message.author
         server = ctx.message.server
 
@@ -104,13 +104,13 @@ class SuggestionBox:
             return await self.bot.say("Finish making your prior sugggestion "
                                       "before making an additional one")
 
-        await self.bot.say("I will message you to collect your suggestion.")
+        await self.bot.say("I will message you to collect your registration.")
         self.settings[server.id]['usercache'].append(author.id)
         self.save_json()
         dm = await self.bot.send_message(author,
                                          "Please respond to this message"
-                                         "with your suggestion.\nYour "
-                                         "suggestion should be a single "
+                                         "with the required format.\nYour "
+                                         "registration should be a single "
                                          "message")
         message = await self.bot.wait_for_message(channel=dm.channel,
                                                   author=author, timeout=120)
@@ -124,7 +124,7 @@ class SuggestionBox:
         else:
             await self.send_suggest(message, server)
 
-            await self.bot.send_message(author, "Your suggestion was "
+            await self.bot.send_message(author, "Your registration was "
                                         "submitted.")
 
     async def send_suggest(self, message, server):
@@ -136,7 +136,7 @@ class SuggestionBox:
 
         em = discord.Embed(description=suggestion,
                            color=discord.Color.purple())
-        em.set_author(name='Suggestion from {0.display_name}'.format(author),
+        em.set_author(name='Team Registrated by {0.display_name}'.format(author),
                       icon_url=avatar)
         em.set_footer(text='{0.id}'.format(author))
 
