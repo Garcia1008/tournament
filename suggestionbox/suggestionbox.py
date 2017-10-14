@@ -82,9 +82,9 @@ class SuggestionBox:
             not self.settings[server.id]['inactive']
         self.save_json()
         if self.settings[server.id]['inactive']:
-            await self.bot.say("Suggestions disabled.")
+            await self.bot.say("Tournament Registration disabled.")
         else:
-            await self.bot.say("Suggestions enabled.")
+            await self.bot.say("Tournament Registration enabled.")
 
     @commands.cooldown(1, 300, commands.BucketType.user)
     @commands.command(name="register", pass_context=True)
@@ -94,21 +94,21 @@ class SuggestionBox:
         server = ctx.message.server
 
         if server.id not in self.settings:
-            return await self.bot.say("Suggestion submissions have not been "
+            return await self.bot.say("Tournament Registration submissions have not been "
                                       "configured for this server.")
         if self.settings[server.id]['inactive']:
-            return await self.bot.say("Suggestion submission is not currently "
+            return await self.bot.say("Tournament Registration submission is not currently "
                                       "enabled on this server.")
 
         if author.id in self.settings[server.id]['usercache']:
-            return await self.bot.say("Finish making your prior sugggestion "
+            return await self.bot.say("Finish making your prior Tournament Registration "
                                       "before making an additional one")
 
-        await self.bot.say("I will message you to collect your registration.")
+        await self.bot.say("I will message you to collect your Tournament Registration.")
         self.settings[server.id]['usercache'].append(author.id)
         self.save_json()
         dm = await self.bot.send_message(author,
-                                         "Please respond to this message"
+                                         "Please respond to this message "
                                          "with the required format.\nYour "
                                          "registration should be a single "
                                          "message")
