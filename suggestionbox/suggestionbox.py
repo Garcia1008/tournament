@@ -7,7 +7,7 @@ from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 
 
-class TournamentBox:
+class SuggestionBox:
     """custom cog for a configureable tournament registration box"""
 
     __author__ = "Credits for code: mikeshardmind. Tournament code edition: Garcia1008"
