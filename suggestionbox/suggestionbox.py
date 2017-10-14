@@ -7,7 +7,7 @@ from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 
 
-class SuggestionBox:
+class TournamentBox:
     """custom cog for a configureable tournament registration box"""
 
     __author__ = "Credits for code: mikeshardmind. Tournament code edition: Garcia1008"
@@ -125,7 +125,7 @@ class SuggestionBox:
             await self.send_suggest(message, server)
 
             await self.bot.send_message(author, "Your registration was "
-                                        "submitted.")
+                                        "submitted. If something is wrong submit again or report it to the server admins")
 
     async def send_suggest(self, message, server):
 
