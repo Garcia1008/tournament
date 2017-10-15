@@ -107,12 +107,12 @@ class SuggestionBox:
         await self.bot.say("I will message you to collect your Tournament Registration.")
         self.settings[server.id]['usercache'].append(author.id)
         self.save_json()
-        dm = await self.bot.send_message(author,
+        await self.bot.send_message(author,
                                          "Please respond to this message "
                                          "with the required format.\nYour "
                                          "registration should be a single "
                                          "message")
-        message = await self.bot.wait_for_message(channel=dm.channel,
+        message = await self.bot.wait_for_message(channel=.channel,
                                                   author=author, timeout=120)
 
         if message is None:
